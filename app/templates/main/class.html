@@ -1,0 +1,10 @@
+{% extends "main/main_base.html" %}  {# main/main_base.html extends layout.html #}
+
+{% block content %}
+    {% for phrase in wiki_info %}
+   <p>{{ phrase['phrase'] }} </p>
+   <p>{{ phrase['def'] }} </p>
+   {% endfor %}
+
+
+{% endblock %}

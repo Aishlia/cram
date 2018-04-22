@@ -70,25 +70,18 @@ def upload_page():
 def admin_page():
     return render_template('main/admin_page.html')
 
-# @main_blueprint.route("/deleteClass", methods=["POST"])
-# @login_required
-# def delete_class():
-#     form = DeleteClassForm(request.form)
-#     id_delete = request.form.get("id")
-#     print(id_delete)
-#     # classes = RegisteredClass.query.filter_by(id_delete).first()
-#     # db.session.delete(classes)
-#     # db.session.commit()
-#     return render_template('main/dashboard.html',
-#                            form=form)
-
-@main_blueprint.route('/classes/<int:id>', methods=['DELETE'])
-def delete_entry(id):
-    if id:
-        classes = RegisteredClass.query.filter_by(id).first()
+@main_blueprint.route('/classes/<page_id>', methods=['DELETE'])
+def delete_entry(page_id):
+    if page_id:
+        classes = RegisteredClass.query.filter_by(page_id).first()
         db.session.delete(classes)
         db.session.commit()
     return redirect(url_for('main.home_page'))
+
+# @main_blueprint.route('/classes/<page_id>', methods=['GET'])
+# def class_show(page_id):
+#     id_class = page_id
+#     return render_template('main/class.html', id = id_class)
 
 
 @main_blueprint.route('/main/profile', methods=['GET', 'POST'])
@@ -113,9 +106,9 @@ def user_profile_page():
                            form=form)
 
 ## you tube is banned for me right now so I can't test this
-@main_blueprint.route('/youtube_info')
+@main_blueprint.route('/classes/<page_id>', methods=['GET'])
 @login_required
-def youtube_info():
+def class_show(page_id):
     my_presentation = pptx.Presentation('/Users/jnai/Documents/hackathon_2018/app/static/files/test_2.pptx')
     phrases_to_search = [] # create a list to store all of the titles
     search_results = []
@@ -146,7 +139,7 @@ def youtube_info():
         print(search_result)
 
         search_results.append(search_result)
-    return render_template('main/youtube_info.html')
+    return render_template('main/class.html')
 
 
 @main_blueprint.route('/wiki_info')
