@@ -106,12 +106,13 @@ def user_profile_page():
                            form=form)
 
 ## you tube is banned for me right now so I can't test this
-@main_blueprint.route('/classes/<page_id>', methods=['GET'])
+@main_blueprint.route('/youtube_info')
 @login_required
-def class_show(page_id):
+def youtube_info():
     my_presentation = pptx.Presentation('/Users/jnai/Documents/hackathon_2018/app/static/files/test_2.pptx')
     phrases_to_search = [] # create a list to store all of the titles
-    search_results = []
+    # search_results = []
+    links = []
 
     for slide in my_presentation.slides:
         try:
@@ -129,22 +130,23 @@ def class_show(page_id):
             search_results = re.findall(r'href=\"\/watch\?v=(.{11})', html_content.read().decode())
             youtube_url = "http://www.youtube.com/watch?v=" + search_results[0]
             print(youtube_url)
+            links.append(phrase + ": " + youtube_url)
         except:
             youtube_url = 'None'
 
-        search_result = {
-            'phrase': phrase,
-            'youtube_link': youtube_url
-        }
-        print(search_result)
+        # search_result = {
+        #     'phrase': phrase,
+        #     'youtube_link': youtube_url
+        # }
+        # print(search_result)
 
-        search_results.append(search_result)
-    return render_template('main/class.html')
+        # search_results.append(search_result)
+    return render_template('main/youtube_info.html', search_result = links)
 
 
-@main_blueprint.route('/wiki_info')
+@main_blueprint.route('/classes/<page_id>', methods=['GET'])
 @login_required
-def wiki_info():
+def class_show(page_id):
     # Getting visible text from wiki page
     def tag_visible(element):
         if element.parent.name in ['style', 'script', 'head', 'title', 'meta', '[document]']:
@@ -237,8 +239,8 @@ def wiki_info():
 
         return phrases_and_defs
 
-    presi_text = pull_presi_text('/Users/eduardo/Downloads/jules.pptx')
+    presi_text = pull_presi_text('/Users/jnai/Documents/hackathon_2018/app/static/files/test_2.pptx')
     entities = entities_text(presi_text)
     phrases_and_defs = get_wiki_definitions(entities)
 
-    return render_template('main/wiki_info.html', wiki_info = phrases_and_defs)
+    return render_template('main/class.html', wiki_info = phrases_and_defs)

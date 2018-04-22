@@ -1,7 +1,9 @@
-<h1>{{search_results}}</h1>
-<title>Upload new File</title>
-<h1>Upload new File</h1>
-<form method=post enctype=multipart/form-data>
-  <p><input type=file name=file>
-     <input type=submit value=Upload>
-</form>
+{% extends "main/main_base.html" %}  {# main/main_base.html extends layout.html #}
+
+{% block content %}
+    {% for phrase in search_results %}
+    <p> {{ phrase }} </p>
+    <!-- <iframe width="560" height="315" src={{phrase}} frameborder="0" allowfullscreen data-autoplay data-keepplaying></iframe> -->
+   {% endfor %}
+
+{% endblock %}
