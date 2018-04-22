@@ -1,0 +1,34 @@
+{% extends "main/main_base.html" %}  {# main/main_base.html extends layout.html #}
+
+{% block content %}
+    {% from "common/form_macros.html" import render_field, render_submit_field %}
+    <form action="" method="POST" class="form" role="form">
+        <div class="header-search-bar">
+            {{ form.hidden_tag() }}
+            {{ render_field(form.name, tabindex=240, placeholder="Add Class") }}
+        </div>
+    </form>
+
+    {% if classes %}
+    <div class="inner_space">
+      {% for class in classes %}
+      <div class="inner_space__section">
+          <div class="inner_space__section__text">
+            {% from "common/form_macros.html" import render_field, render_submit_field %}
+            <form method="POST" action="./deleteClass">
+                {{ form.hidden_tag() }}
+                <input type="hidden" value="{{class.id}}">
+                <input class="circle-delete" type="submit" value="Delete">
+            </form>
+            <h3>{{ class.name }}</h3>
+          </div>
+      </div>
+        {% endfor %}
+    </div>
+    {% else %}
+
+        <h1>Add Class</h1>
+
+    {% endif %}
+
+{% endblock %}
