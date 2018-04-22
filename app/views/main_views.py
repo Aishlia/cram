@@ -8,7 +8,7 @@ from flask import request, url_for
 from flask_user import current_user, login_required, roles_required
 
 from app import db
-from app.models.user_models import UserProfileForm, User, RegisteredClass, AddClassForm
+from app.models.user_models import UserProfileForm, User, RegisteredClass, AddClassForm, DeleteClassForm
 
 main_blueprint = Blueprint('main', __name__, template_folder='templates')
 
@@ -52,15 +52,25 @@ def upload_page():
 def admin_page():
     return render_template('main/admin_page.html')
 
-@main_blueprint.route("/deleteClass", methods=["POST"])
-@login_required
-def delete_class():
-    title = request.form.get("id")
+# @main_blueprint.route("/deleteClass", methods=["POST"])
+# @login_required
+# def delete_class():
+#     form = DeleteClassForm(request.form)
+#     id_delete = request.form.get("id")
+#     print(id_delete)
+#     # classes = RegisteredClass.query.filter_by(id_delete).first()
+#     # db.session.delete(classes)
+#     # db.session.commit()
+#     return render_template('main/dashboard.html',
+#                            form=form)
+
+@main_blueprint.route('/classes/<int:id>', methods=['DELETE'])
+def delete_entry(id):
     classes = RegisteredClass.query.filter_by(id).first()
     db.session.delete(classes)
     db.session.commit()
-    return render_template('main/dashboard.html',
-                           form=form)
+    return render_template('main/dashboard.html')
+
 
 @main_blueprint.route('/main/profile', methods=['GET', 'POST'])
 @login_required

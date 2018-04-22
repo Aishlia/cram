@@ -75,3 +75,8 @@ class AddClassForm(FlaskForm):
     name = StringField('Name', validators=[
         validators.DataRequired('Name required')])
     submit = SubmitField('Save')
+
+class DeleteClassForm(FlaskForm):
+    id = StringField('Id', validators=[
+        validators.DataRequired('Id required')])
+    submit = SubmitField('Save')

@@ -59,7 +59,6 @@ ul {
     line-height: 1.25em;
     letter-spacing: .115em;
     color: #333;
-    text-transform: uppercase;
     font-family: proxima-nova,'sans-serif';
     padding-left: 25px;
     font-weight: 700;
@@ -155,4 +154,12 @@ border-bottom: 1px solid #ebebeb;
     -webkit-box-shadow: none;
     box-shadow: none;
     outline:none;
+}
+
+.form-group {
+    margin-bottom: 0px;
+}
+
+.circle-delete{
+    -webkit-appearance: searchfield-cancel-button !important;
 }
