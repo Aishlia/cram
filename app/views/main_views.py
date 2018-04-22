@@ -1,20 +1,9 @@
-# Copyright 2014 SolidBuilds.com. All rights reserved
-#
-# Authors: Ling Thio <ling.thio@gmail.com>
-
-
 from flask import Blueprint, redirect, render_template
 from flask import request, url_for, send_from_directory
 from flask_user import current_user, login_required, roles_required
 
 from app import db
-<<<<<<< HEAD
 from app.models.user_models import UserProfileForm, User, RegisteredClass, AddClassForm, DeleteClassForm
-=======
-<<<<<<< HEAD
-from app.models.user_models import UserProfileForm, User, RegisteredClass
-from flask import send_from_directory
-import pptx
 import urllib.request
 import urllib.parse
 import re
@@ -91,10 +80,11 @@ def admin_page():
 
 @main_blueprint.route('/classes/<int:id>', methods=['DELETE'])
 def delete_entry(id):
-    classes = RegisteredClass.query.filter_by(id).first()
-    db.session.delete(classes)
-    db.session.commit()
-    return render_template('main/dashboard.html')
+    if id:
+        classes = RegisteredClass.query.filter_by(id).first()
+        db.session.delete(classes)
+        db.session.commit()
+    return redirect(url_for('main.home_page'))
 
 
 @main_blueprint.route('/main/profile', methods=['GET', 'POST'])
@@ -250,7 +240,7 @@ def wiki_info():
 
         return phrases_and_defs
 
-    presi_text = pull_presi_text('/Users/jnai/Documents/hackathon_2018/app/static/files/test_2.pptx')
+    presi_text = pull_presi_text('/Users/eduardo/Downloads/jules.pptx')
     entities = entities_text(presi_text)
     phrases_and_defs = get_wiki_definitions(entities)
 

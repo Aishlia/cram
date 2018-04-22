@@ -15,7 +15,7 @@
       <div class="inner_space__section">
           <div class="inner_space__section__text">
             {% from "common/form_macros.html" import render_field, render_submit_field %}
-            <form action="{{ url_for('delete_entry', id={{class.id}}) }}" method="POST">
+            <form action="{{ url_for('main.delete_entry', id=(class.id)) }}" method="POST">
                 {{ form.hidden_tag() }}
                 <input type="hidden" name="id" value="{{class.id}}">
                 <input class="circle-delete" type="submit" value="">
