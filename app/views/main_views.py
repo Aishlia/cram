@@ -8,7 +8,7 @@ from flask import request, url_for
 from flask_user import current_user, login_required, roles_required
 
 from app import db
-from app.models.user_models import UserProfileForm
+from app.models.user_models import UserProfileForm, User, RegisteredClass
 
 main_blueprint = Blueprint('main', __name__, template_folder='templates')
 
@@ -22,7 +22,7 @@ def home_page():
 @main_blueprint.route('/member')
 @login_required  # Limits access to authenticated users
 def member_page():
-    test = User.query.all()
+    test = User.query.get(1)
     return render_template('main/user_page.html', user = test)
 
 

@@ -42,7 +42,6 @@ def create_users():
     # Save to DB
     db.session.commit()
 
-
 def find_or_create_role(name, label):
     """ Find existing role or create new role """
     role = Role.query.filter(Role.name == name).first()
