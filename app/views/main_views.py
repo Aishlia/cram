@@ -25,6 +25,11 @@ def member_page():
     test = User.query.get(1)
     return render_template('main/user_page.html', user = test)
 
+@main_blueprint.route('/upload')
+@login_required  # Limits access to authenticated users
+def upload_page():
+    return render_template('main/upload.html')
+
 
 # The Admin page is accessible to users with the 'admin' role
 @main_blueprint.route('/admin')
@@ -53,5 +58,3 @@ def user_profile_page():
     # Process GET or invalid POST
     return render_template('main/user_profile_page.html',
                            form=form)
-
-
