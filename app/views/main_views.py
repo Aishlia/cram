@@ -8,6 +8,7 @@ from flask import request, url_for, send_from_directory
 from flask_user import current_user, login_required, roles_required
 
 from app import db
+<<<<<<< HEAD
 from app.models.user_models import UserProfileForm, User, RegisteredClass
 from flask import send_from_directory
 import pptx
@@ -30,6 +31,9 @@ from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types
 
+=======
+from app.models.user_models import UserProfileForm, User, RegisteredClass, AddClassForm
+>>>>>>> 9359083ea85acac4d541ba96dab9e654ae444ac5
 
 main_blueprint = Blueprint('main', __name__, template_folder='templates')
 
@@ -40,11 +44,26 @@ def home_page():
 
 
 # The User page is accessible to authenticated users (users that have logged in)
-@main_blueprint.route('/member')
+@main_blueprint.route('/dashboard', methods=['GET', 'POST'])
 @login_required  # Limits access to authenticated users
 def member_page():
-    test = User.query.get(1)
-    return render_template('main/user_page.html', user = test)
+    # Initialize form
+    form = AddClassForm(request.form)
+    
+    # Process valid POST
+    if request.method == 'POST' and form.validate():
+
+        print(form.name.data, form)
+
+        single_class = RegisteredClass(name=form.name.data, user_id=current_user.id)
+        db.session.add(single_class)
+        db.session.commit()
+
+        # db.session.commit()
+        return redirect(url_for('main.member_page'))
+
+    classes = RegisteredClass.query.filter_by(user_id=current_user.id).all()
+    return render_template('main/dashboard.html', classes = classes, form=form)
 
 @main_blueprint.route('/upload')
 @login_required  # Limits access to authenticated users
@@ -58,6 +77,15 @@ def upload_page():
 def admin_page():
     return render_template('main/admin_page.html')
 
+@main_blueprint.route("/deleteClass", methods=["POST"])
+@login_required
+def delete_class():
+    title = request.form.get("id")
+    classes = RegisteredClass.query.filter_by(id).first()
+    db.session.delete(classes)
+    db.session.commit()
+    return render_template('main/dashboard.html',
+                           form=form)
 
 @main_blueprint.route('/main/profile', methods=['GET', 'POST'])
 @login_required
