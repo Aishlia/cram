@@ -19,6 +19,7 @@ the_app = create_app(dict(
     WTF_CSRF_ENABLED=False,  # Disable CSRF form validation
 ))
 
+
 # Setup an application context (since the tests run outside of the webserver context)
 the_app.app_context().push()
 

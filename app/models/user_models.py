@@ -29,7 +29,7 @@ class User(db.Model, UserMixin):
     # Relationships
     roles = db.relationship('Role', secondary='users_roles',
                             backref=db.backref('users', lazy='dynamic'))
-
+    classes = db.relationship('RegisteredClass', backref='users', lazy=True)
 
 # Define the Role data model
 class Role(db.Model):
@@ -37,6 +37,13 @@ class Role(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(50), nullable=False, server_default=u'', unique=True)  # for @roles_accepted()
     label = db.Column(db.Unicode(255), server_default=u'')  # for display purposes
+
+class RegisteredClass(db.Model):
+    __tablename__ = 'classes'
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(100), nullable=False, server_default=u'')
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
+        nullable=False)
 
 
 # Define the UserRoles association model

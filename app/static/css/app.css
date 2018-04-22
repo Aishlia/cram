@@ -1,13 +1,77 @@
-/**** element styles ****/
-hr { border-color: #cccccc; margin: 0px; }
+#header-div{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background: #fff;
+    position: fixed;
+    z-index: 99;
+    top: 0;
+    width: 100%;
+    box-shadow: 5px 0 40px rgba(0,0,0,.08);
+}
 
-/**** header, main and footer divs ****/
-.header-title { font-size: 30px; }
+.wrap {
+    max-width: 1580px;
+    width: 100%;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-/**** class-based style modifiers ****/
+.header__logo, .header__navigation {
+    display: inline-block;
+    vertical-align: middle;
+}
 
-.no-margins { margin: 0px; }
+.header__logo {
+    width: 20%;
+    height: 44px;
+    position: relative;
+    z-index: 3;
+}
 
-.with-margins { margin: 10px; }
+#main-div{
+    padding-top: 100px;
+}
 
-.col-centered { float: none; margin: 0 auto; }
+.header__navigation {
+    width: 79%;
+}
+
+.header__logo>a>img {
+    height: 44px;
+}
+
+.header__navigation ul {
+    text-align: right;
+}
+
+ul {
+    list-style: none;
+}
+
+.header__navigation ul li {
+    display: inline-block;
+}
+
+.header__navigation ul li a:not(.button) {
+    font-size: .75em;
+    line-height: 1.25em;
+    letter-spacing: .115em;
+    color: #333;
+    text-transform: uppercase;
+    font-family: proxima-nova,'sans-serif';
+    padding-left: 25px;
+    font-weight: 700;
+    padding-right: 25px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    transition: color .2s ease-in-out;
+}
+
+#footer-div{
+    background: #fff;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    border-top: 2px solid #f4f6fa;
+}

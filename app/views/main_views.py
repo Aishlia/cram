@@ -22,7 +22,8 @@ def home_page():
 @main_blueprint.route('/member')
 @login_required  # Limits access to authenticated users
 def member_page():
-    return render_template('main/user_page.html')
+    test = User.query.all()
+    return render_template('main/user_page.html', user = test)
 
 
 # The Admin page is accessible to users with the 'admin' role
