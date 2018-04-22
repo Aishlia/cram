@@ -8,7 +8,7 @@ from flask import request, url_for
 from flask_user import current_user, login_required, roles_required
 
 from app import db
-from app.models.user_models import UserProfileForm, User, RegisteredClass
+from app.models.user_models import UserProfileForm, User, RegisteredClass, AddClassForm
 
 main_blueprint = Blueprint('main', __name__, template_folder='templates')
 
@@ -19,11 +19,27 @@ def home_page():
 
 
 # The User page is accessible to authenticated users (users that have logged in)
-@main_blueprint.route('/member')
+@main_blueprint.route('/member', methods=['GET', 'POST'])
 @login_required  # Limits access to authenticated users
 def member_page():
-    test = User.query.get(1)
-    return render_template('main/user_page.html', user = test)
+    # Initialize form
+    form = AddClassForm(request.form)
+    
+    # Process valid POST
+    if request.method == 'POST' and form.validate():
+        # Copy form fields to user_profile fields
+        result = name(str(form.name.data))
+        print(result)
+        # Save user_profile
+        # db.session.commit()
+        # Redirect to home page
+        return redirect(url_for('main.member_page'))
+        # Process GET or invalid POST
+    return render_template('main/user_page.html',
+                            form=form)
+
+    classes = RegisteredClass.query.get(1)
+    return render_template('main/user_page.html', classes = classes)
 
 
 # The Admin page is accessible to users with the 'admin' role
@@ -31,7 +47,6 @@ def member_page():
 @roles_required('admin')  # Limits access to users with the 'admin' role
 def admin_page():
     return render_template('main/admin_page.html')
-
 
 @main_blueprint.route('/main/profile', methods=['GET', 'POST'])
 @login_required

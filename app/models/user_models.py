@@ -70,3 +70,8 @@ class UserProfileForm(FlaskForm):
     last_name = StringField('Last name', validators=[
         validators.DataRequired('Last name is required')])
     submit = SubmitField('Save')
+
+class AddClassForm(FlaskForm):
+    name = StringField('Name', validators=[
+        validators.DataRequired('Name required')])
+    submit = SubmitField('Save')
