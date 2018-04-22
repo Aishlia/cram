@@ -3,7 +3,11 @@ from flask import request, url_for, send_from_directory
 from flask_user import current_user, login_required, roles_required
 
 from app import db
+
 from app.models.user_models import UserProfileForm, User, RegisteredClass, AddClassForm, DeleteClassForm
+
+from flask import send_from_directory
+import pptx
 import urllib.request
 import urllib.parse
 import re
@@ -38,7 +42,7 @@ def home_page():
 def member_page():
     # Initialize form
     form = AddClassForm(request.form)
-    
+
     # Process valid POST
     if request.method == 'POST' and form.validate():
 
@@ -244,4 +248,4 @@ def wiki_info():
     entities = entities_text(presi_text)
     phrases_and_defs = get_wiki_definitions(entities)
 
-    return render_template('main/wiki_info.html')
+    return render_template('main/wiki_info.html', wiki_info = phrases_and_defs)
